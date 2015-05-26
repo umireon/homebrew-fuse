@@ -18,9 +18,9 @@ install:
 script:
   - cd $(brew --prefix)
   - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
-        brew test-bot $TRAVIS_COMMIT --skip-setup --verbose --tap=homebrew-fuse;
+        brew test-bot $TRAVIS_COMMIT --skip-setup --verbose --tap=homebrew/fuse;
     else
-        brew test-bot $TRAVIS_COMMIT --skip-setup --verbose --tap=homebrew-fuse --ci-pr;
+        brew test-bot $TRAVIS_COMMIT --skip-setup --verbose --tap=homebrew/fuse --ci-pr;
     fi
 
 notifications:
