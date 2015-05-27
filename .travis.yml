@@ -7,8 +7,6 @@ cache:
 
 before_install:
   - brew update
-  - brew install caskroom/cask/brew-cask
-  - sudo brew cask install osxfuse
 
 install:
   - mkdir -p $(brew --prefix)/Library/Taps/homebrew/
