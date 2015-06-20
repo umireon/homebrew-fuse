@@ -91,7 +91,6 @@ class Gcsfuse < Formula
   end
 
   test do
-    system bin/"gcsfuse", "--help"
     system bin/"gcsfuse_mount_helper", "--help"
   end
 end
