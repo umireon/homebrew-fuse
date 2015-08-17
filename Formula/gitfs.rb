@@ -1,9 +1,8 @@
 class Gitfs < Formula
   desc "Version controlled file system"
   homepage "http://www.presslabs.com/gitfs"
-  url "https://github.com/PressLabs/gitfs/archive/0.2.5.tar.gz"
-  sha256 "b546ae6cbe91fbf0142860b67eb85d467a9ca5dc11681ad656f20deb573f9670"
-
+  url "https://github.com/PressLabs/gitfs/archive/0.3.3.tar.gz"
+  sha256 "58ee180f8b3e09dfd74d29c50a5d64234b0ce07794e013638de46cf4084ae2a8"
   head "https://github.com/PressLabs/gitfs.git"
 
   depends_on "libgit2" => "with-libssh2"
@@ -13,13 +12,6 @@ class Gitfs < Formula
   resource "fusepy" do
     url "https://pypi.python.org/packages/source/f/fusepy/fusepy-2.0.2.tar.gz"
     sha256 "aa5929d5464caed81406481a330dc975d1a95b9a41d0a98f095c7e18fe501bfc"
-  end
-
-  # MUST update this every time libgit2 gets a major update.
-  # Check if upstream have updated the requirements, and patch if necessary.
-  resource "pygit2" do
-    url "https://pypi.python.org/packages/source/p/pygit2/pygit2-0.22.0.tar.gz"
-    sha256 "d67045c8f6d6e8c23fc2bb6ba51f084177c7b7617c42bc433c6fec5ac0bf42e4"
   end
 
   resource "atomiclong" do
@@ -37,11 +29,18 @@ class Gitfs < Formula
     sha256 "957d98b661c0b64b580ab6f94b125e09b6714154ee51de40bca16d3f0076b86c"
   end
 
+  # MUST update this every time libgit2 gets a major update.
+  # Check if upstream have updated the requirements, and patch if necessary.
+  resource "pygit2" do
+    url "https://pypi.python.org/packages/source/p/pygit2/pygit2-0.23.0.tar.gz"
+    sha256 "90101a7a4b3c3563662c4047d5b6c52d84d9150570a7262e88892c604545dcb2"
+  end
+
   def install
     # This exactly replicates how upstream handled the last pygit2 update
     # https://github.com/PressLabs/gitfs/commit/8a53f6ba5ce2a4497779077a9249e7b4b5fcc32b
     # https://github.com/PressLabs/gitfs/pull/178
-    inreplace "requirements.txt", "pygit2==0.21.4", "pygit2==0.22.0"
+    inreplace "requirements.txt", "pygit2==0.22.0", "pygit2==0.23.0"
 
     ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python2.7/site-packages"
     %w[fusepy pygit2 atomiclong cffi pycparser].each do |r|
@@ -70,7 +69,7 @@ class Gitfs < Formula
     ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python2.7/site-packages"
     ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python2.7/site-packages"
 
-    Pathname("test.py").write <<-EOS.undent
+    (testpath/"test.py").write <<-EOS.undent
      import gitfs
      import pygit2
      pygit2.init_repository('testing/.git', True)
