@@ -8,10 +8,15 @@ class Ntfs3g < Formula
   depends_on "gettext"
   depends_on :osxfuse
 
-  def install
-    # Workaround for hardcoded /sbin in ntfsprogs
-    inreplace "ntfsprogs/Makefile.in", "/sbin", sbin
+  head do
+    url "git://git.code.sf.net/p/ntfs-3g/ntfs-3g", :branch => "edge"
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+    depends_on "libgcrypt" => :build
+  end
 
+  def install
     ENV.append "LDFLAGS", "-lintl"
     args = ["--disable-debug",
             "--disable-dependency-tracking",
@@ -20,6 +25,8 @@ class Ntfs3g < Formula
             "--mandir=#{man}",
             "--with-fuse=external"]
 
+    system "./autogen.sh" if build.head?
+    inreplace "ntfsprogs/Makefile.in", "/sbin", sbin # Workaround for hardcoded /sbin in ntfsprogs
     system "./configure", *args
     system "make"
     system "make", "install"
