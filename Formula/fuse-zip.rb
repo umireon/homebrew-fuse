@@ -4,6 +4,7 @@ class FuseZip < Formula
   url "https://fuse-zip.googlecode.com/files/fuse-zip-0.4.0.tar.gz"
   sha256 "db9eb13aa250061eaa7df6b1ee5022dbea54089094af94cc3d1767b63bdc9ca7"
   head "https://code.google.com/p/fuse-zip/", :using => :hg
+  revision 1
 
   depends_on "pkg-config" => :build
   depends_on "libzip"
