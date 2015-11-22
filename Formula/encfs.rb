@@ -3,6 +3,8 @@ class Encfs < Formula
   homepage "https://vgough.github.io/encfs/"
   url "https://github.com/vgough/encfs/archive/v1.8.1.tar.gz"
   sha256 "ed6b69d8aba06382ad01116bbce2e4ad49f8de85cdf4e2fab7ee4ac82af537e9"
+  revision 1
+
   head "https://github.com/vgough/encfs.git"
 
   depends_on "pkg-config" => :build
