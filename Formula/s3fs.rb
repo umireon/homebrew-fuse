@@ -1,8 +1,8 @@
 class S3fs < Formula
   desc "FUSE-based file system backed by Amazon S3"
   homepage "https://code.google.com/p/s3fs/"
-  url "https://github.com/s3fs-fuse/s3fs-fuse/archive/v1.78.tar.gz"
-  sha256 "36c0b00a294d9676c462985c0c3f1362540e8ebc61c15bacb45e28a2f00297f5"
+  url "https://github.com/s3fs-fuse/s3fs-fuse/archive/v1.79.tar.gz"
+  sha256 "61c179f958ce236c6612bf6ffc7bdb6478393ac6e5ec0b04788000fc9f9dbf66"
 
   head "https://github.com/s3fs-fuse/s3fs-fuse.git"
 
@@ -13,9 +13,7 @@ class S3fs < Formula
   depends_on "nettle"
   depends_on "libgcrypt"
 
-  # S3fs currently relies on fuse4x which uses unsigned kexts, barred by Yosemite.
-  # Fuse4x and osxfuse are merging so monitor this over time and switch if/when possible.
-  depends_on "fuse4x"
+  depends_on :osxfuse
 
   def install
     system "./autogen.sh"
@@ -30,5 +28,9 @@ class S3fs < Formula
 
       https://code.google.com/p/s3fs/issues/detail?id=73
     EOS
+  end
+
+  test do
+    system "#{bin}/s3fs", "--version"
   end
 end
