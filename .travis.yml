@@ -19,6 +19,8 @@ before_install:
   - sudo chown -R $USER $(brew --repo)
   - brew update
   - if ! brew command cask &> /dev/null; then brew tap caskroom/cask; fi
+  - brew uninstall --force brew-cask
+  - brew tap --repair
   - brew update
   - sudo brew cask install osxfuse
   - mkdir -p $(brew --repo)/Library/Taps/homebrew
