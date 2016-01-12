@@ -30,7 +30,7 @@ before_install:
   - env | grep TRAVIS_
 
 script:
-  - brew test-bot --tap=homebrew/fuse
+  - brew test-bot --tap=homebrew/fuse --no-bottle
 
 notifications:
   email:
