@@ -21,15 +21,15 @@ before_install:
   - git reset --hard origin/master
   - git clean -qxdff
   - brew update
+  - sudo brew cask install osxfuse
   - mkdir -p $(brew --repo)/Library/Taps/homebrew
   - ln -s $PWD $(brew --repo)/Library/Taps/homebrew/homebrew-fuse
   - cd $(brew --repo)/Library/Taps/homebrew/homebrew-fuse
   - export TRAVIS_BUILD_DIR="$(brew --repo)/Library/Taps/homebrew/homebrew-fuse"
   - env | grep TRAVIS_
-  - sudo brew cask install osxfuse
 
 script:
-  - brew test-bot --tap=homebrew/fuse --no-bottle
+  - brew test-bot --no-bottle
 
 notifications:
   email:
