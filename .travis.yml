@@ -17,9 +17,8 @@ matrix:
 before_install:
   - if [ -f ".git/shallow" ]; then travis_retry git fetch --unshallow; fi
   - sudo chown -R $USER $(brew --repo)
-  - cd $(brew --repo)
-  - git reset --hard origin/master
-  - git clean -qxdff
+  - git -C $(brew --repo) reset --hard origin/master
+  - git -C $(brew --repo) clean -qxdff
   - brew update
   - sudo brew cask install osxfuse
   - mkdir -p $(brew --repo)/Library/Taps/homebrew
