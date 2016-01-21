@@ -6,17 +6,9 @@ class Tup < Formula
   depends_on "pkg-config" => :build
   depends_on :osxfuse
 
-  # Backport Yosemite compilation fix
   stable do
-    url "https://github.com/gittup/tup/archive/v0.7.3.tar.gz"
-    sha256 "2bfc08c1201475803428dc2f665f90595d733be1a4189feaf4949b305fe13403"
-
-    if MacOS.version >= :yosemite
-      patch do
-        url "https://github.com/gittup/tup/commit/9812548b4d38336.diff"
-        sha256 "6c6e785332ac18b317cff52928a6bc94c364308c4c2ea8e7b44c339e465441ea"
-      end
-    end
+    url "https://github.com/gittup/tup/archive/v0.7.4.tar.gz"
+    sha256 "e23f10b618925c85bc376ff0613dc4daf3990ecf2fc811ece54e87c7d64c9010"
   end
 
   def install
