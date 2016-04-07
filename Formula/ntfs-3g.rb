@@ -1,8 +1,8 @@
 class Ntfs3g < Formula
   desc "Read-write NTFS driver for FUSE"
   homepage "https://www.tuxera.com/community/open-source-ntfs-3g/"
-  url "https://tuxera.com/opensource/ntfs-3g_ntfsprogs-2015.3.14.tgz"
-  sha256 "97f996015d8316d4a272bd2629978e5e97072dd3cc148ce39802f8037c6538f2"
+  url "https://tuxera.com/opensource/ntfs-3g_ntfsprogs-2016.2.22.tgz"
+  sha256 "d7b72c05e4b3493e6095be789a760c9f5f2b141812d5b885f3190c98802f1ea0"
 
   depends_on "pkg-config" => :build
   depends_on "gettext"
