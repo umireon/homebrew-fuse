@@ -16,18 +16,18 @@ brew install https://raw.githubusercontent.com/Homebrew/homebrew-fuse/master/For
 
 ## Acceptable Formulae.
 
-You can read Homebrew’s Acceptable Formulae document [here](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/Acceptable-Formulae.md).
+You can read Homebrew’s Acceptable Formulae document [here](https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/Acceptable-Formulae.md).
 
 ## Troubleshooting
 First, please run `brew update` and `brew doctor`.
 
-Second, read the [Troubleshooting Checklist](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/Troubleshooting.md#troubleshooting).
+Second, read the [Troubleshooting Checklist](https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/Troubleshooting.md#troubleshooting).
 
 **If you don’t read these it will take us far longer to help you with your problem.**
 
 ## More Documentation
 
-`brew help`, `man brew` or check [our documentation](https://github.com/Homebrew/homebrew/tree/master/share/doc/homebrew#readme).
+`brew help`, `man brew` or check [our documentation](https://github.com/Homebrew/brew/tree/master/share/doc/homebrew#readme).
 
 ## License
-Code is under the [BSD 2 Clause (NetBSD) license](https://github.com/Homebrew/homebrew/tree/master/LICENSE.txt).
+Code is under the [BSD 2 Clause (NetBSD) license](https://github.com/Homebrew/brew/tree/master/LICENSE.txt).
