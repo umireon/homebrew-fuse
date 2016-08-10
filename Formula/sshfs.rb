@@ -1,8 +1,8 @@
 class Sshfs < Formula
   desc "File system client based on SSH File Transfer Protocol"
   homepage "https://osxfuse.github.io/"
-  url "https://github.com/osxfuse/sshfs/archive/osxfuse-sshfs-2.5.0.tar.gz"
-  sha256 "8ea4d3d5bc0f343998009d7eb138e3804490f6a22e890c6de4eadc6fd2414ae0"
+  url "https://github.com/libfuse/sshfs/releases/download/sshfs_2.8/sshfs-2.8.tar.gz"
+  sha256 "7f689174d02e6b7e2631306fda4fb8e6b4483102d1bce82b3cdafba33369ad22"
 
   option "without-sshnodelay", "Don't compile NODELAY workaround for ssh"
 
@@ -13,8 +13,11 @@ class Sshfs < Formula
   depends_on :osxfuse
   depends_on "glib"
 
-  # Fixes issue https://github.com/osxfuse/sshfs/pull/4
-  patch :DATA
+  # Fixes issue https://github.com/libfuse/sshfs/issues/27
+  patch do
+    url "https://github.com/libfuse/sshfs/commit/e5acfce8eda218d.patch"
+    sha256 "53b165353c944303d0839bbe1bf16c04eaaee2deca89ccff729b1974d14aa8cb"
+  end
 
   def install
     args = %W[
@@ -24,7 +27,6 @@ class Sshfs < Formula
 
     args << "--disable-sshnodelay" if build.without? "sshnodelay"
 
-    system "autoreconf", "--force", "--install"
     system "./configure", *args
     system "make", "install"
   end
@@ -33,16 +35,3 @@ class Sshfs < Formula
     system "#{bin}/sshfs", "--version"
   end
 end
-
-__END__
---- a/sshfs.c
-+++ b/sshfs.c
-@@ -313,6 +313,8 @@
-	"ConnectTimeout",
-	"ControlMaster",
-	"ControlPath",
-+	"ForwardAgent",
-+	"ForwardX11",
-	"GlobalKnownHostsFile",
-	"GSSAPIAuthentication",
-	"GSSAPIDelegateCredentials",
