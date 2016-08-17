@@ -1,59 +1,45 @@
 class Gitfs < Formula
+  include Language::Python::Virtualenv
+
   desc "Version controlled file system"
   homepage "http://www.presslabs.com/gitfs"
-  url "https://github.com/PressLabs/gitfs/archive/0.3.3.tar.gz"
-  sha256 "58ee180f8b3e09dfd74d29c50a5d64234b0ce07794e013638de46cf4084ae2a8"
+  url "https://github.com/PressLabs/gitfs/archive/0.4.3.tar.gz"
+  sha256 "d8dcfb176c0672cb72f0fc3718ccfd76420979be92668f440a81579b2438adc0"
   head "https://github.com/PressLabs/gitfs.git"
 
-  depends_on "libgit2" => "with-libssh2"
+  depends_on "libgit2"
   depends_on :osxfuse
   depends_on :python if MacOS.version <= :snow_leopard
 
-  resource "fusepy" do
-    url "https://pypi.python.org/packages/source/f/fusepy/fusepy-2.0.2.tar.gz"
-    sha256 "aa5929d5464caed81406481a330dc975d1a95b9a41d0a98f095c7e18fe501bfc"
-  end
-
   resource "atomiclong" do
-    url "https://pypi.python.org/packages/source/a/atomiclong/atomiclong-0.1.1.tar.gz"
+    url "https://files.pythonhosted.org/packages/86/8c/70aea8215c6ab990f2d91e7ec171787a41b7fbc83df32a067ba5d7f3324f/atomiclong-0.1.1.tar.gz"
     sha256 "cb1378c4cd676d6f243641c50e277504abf45f70f1ea76e446efcdbb69624bbe"
   end
 
   resource "cffi" do
-    url "https://pypi.python.org/packages/source/c/cffi/cffi-0.8.6.tar.gz"
-    sha256 "2532d9e3af9e3c6d0f710fc98b0295b563c7f39cfd97dd2242bd36fbf4900610"
+    url "https://files.pythonhosted.org/packages/83/3c/00b553fd05ae32f27b3637f705c413c4ce71290aa9b4c4764df694e906d9/cffi-1.7.0.tar.gz"
+    sha256 "6ed5dd6afd8361f34819c68aaebf9e8fc12b5a5893f91f50c9e50c8886bb60df"
   end
 
-  resource "pycparser" do
-    url "https://pypi.python.org/packages/source/p/pycparser/pycparser-2.10.tar.gz"
-    sha256 "957d98b661c0b64b580ab6f94b125e09b6714154ee51de40bca16d3f0076b86c"
+  resource "fusepy" do
+    url "https://files.pythonhosted.org/packages/source/f/fusepy/fusepy-2.0.2.tar.gz"
+    sha256 "aa5929d5464caed81406481a330dc975d1a95b9a41d0a98f095c7e18fe501bfc"
   end
 
   # MUST update this every time libgit2 gets a major update.
   # Check if upstream have updated the requirements, and patch if necessary.
   resource "pygit2" do
-    url "https://pypi.python.org/packages/source/p/pygit2/pygit2-0.23.0.tar.gz"
-    sha256 "90101a7a4b3c3563662c4047d5b6c52d84d9150570a7262e88892c604545dcb2"
+    url "https://files.pythonhosted.org/packages/97/b3/18a9f79c5e0e87d877d56566dae1fa5b8fa68a605b41e38f807951fe8620/pygit2-0.24.0.tar.gz"
+    sha256 "ba76d97e90713584c8cb9d33c81cf9156aa69d6914cd3cdbddb740a069298105"
+  end
+
+  resource "six" do
+    url "https://files.pythonhosted.org/packages/b3/b2/238e2590826bfdd113244a40d9d3eb26918bd798fc187e2360a8367068db/six-1.10.0.tar.gz"
+    sha256 "105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a"
   end
 
   def install
-    # This exactly replicates how upstream handled the last pygit2 update
-    # https://github.com/PressLabs/gitfs/commit/8a53f6ba5ce2a4497779077a9249e7b4b5fcc32b
-    # https://github.com/PressLabs/gitfs/pull/178
-    inreplace "requirements.txt", "pygit2==0.22.0", "pygit2==0.23.0"
-
-    ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python2.7/site-packages"
-    %w[fusepy pygit2 atomiclong cffi pycparser].each do |r|
-      resource(r).stage do
-        system "python", *Language::Python.setup_install_args(libexec/"vendor")
-      end
-    end
-
-    ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python2.7/site-packages"
-    system "python", *Language::Python.setup_install_args(libexec)
-
-    bin.install Dir[libexec/"bin/*"]
-    bin.env_script_all_files(libexec/"bin", :PYTHONPATH => ENV["PYTHONPATH"])
+    virtualenv_install_with_resources
   end
 
   def caveats; <<-EOS.undent
@@ -66,20 +52,19 @@ class Gitfs < Formula
   end
 
   test do
-    ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python2.7/site-packages"
     ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python2.7/site-packages"
 
     (testpath/"test.py").write <<-EOS.undent
-     import gitfs
-     import pygit2
-     pygit2.init_repository('testing/.git', True)
+      import gitfs
+      import pygit2
+      pygit2.init_repository('testing/.git', True)
     EOS
 
     system "python", "test.py"
     assert File.exist?("testing/.git/config")
     cd "testing" do
       system "git", "remote", "add", "homebrew", "https://github.com/Homebrew/homebrew.git"
-      assert_match /homebrew/, shell_output("git remote")
+      assert_match "homebrew", shell_output("git remote")
     end
   end
 end
