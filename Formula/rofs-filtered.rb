@@ -11,7 +11,7 @@ class RofsFiltered < Formula
   depends_on "intltool" => :build
   depends_on "gettext" => :build
   depends_on :osxfuse
-  depends_on :macos => :yosemite
+  depends_on macos: :yosemite
 
   def install
     ENV.prepend "CPPFLAGS", "-I#{HOMEBREW_PREFIX}/include/osxfuse/fuse"

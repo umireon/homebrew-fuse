@@ -9,7 +9,7 @@ class Ntfs3g < Formula
   depends_on :osxfuse
 
   head do
-    url "git://git.code.sf.net/p/ntfs-3g/ntfs-3g", :branch => "edge"
+    url "git://git.code.sf.net/p/ntfs-3g/ntfs-3g", branch: "edge"
     depends_on "autoconf" => :build
     depends_on "automake" => :build
     depends_on "libtool" => :build

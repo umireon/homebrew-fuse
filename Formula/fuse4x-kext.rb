@@ -4,7 +4,7 @@ class Fuse4xKext < Formula
   url "https://github.com/fuse4x/kext/archive/fuse4x_0_9_2.tar.gz"
   sha256 "d4072d9110c7990c9b4ced4d4a37cbca278d8569ea566732c0533fad3b69116d"
 
-  depends_on :xcode => :build
+  depends_on xcode: :build
   depends_on UnsignedKextRequirement
 
   def install
