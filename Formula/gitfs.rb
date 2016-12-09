@@ -3,8 +3,8 @@ class Gitfs < Formula
 
   desc "Version controlled file system"
   homepage "http://www.presslabs.com/gitfs"
-  url "https://github.com/PressLabs/gitfs/archive/0.4.5.tar.gz"
-  sha256 "c22d48e32b0733815369812404d2002db50fefc983412da23c14d838226a6582"
+  url "https://github.com/PressLabs/gitfs/archive/0.4.5.1.tar.gz"
+  sha256 "6049fd81182d9172e861d922f3e2660f76366f85f47f4c2357f769d24642381c"
   head "https://github.com/PressLabs/gitfs.git"
 
   depends_on "libgit2"
@@ -29,8 +29,8 @@ class Gitfs < Formula
   # MUST update this every time libgit2 gets a major update.
   # Check if upstream have updated the requirements, and patch if necessary.
   resource "pygit2" do
-    url "https://files.pythonhosted.org/packages/97/b3/18a9f79c5e0e87d877d56566dae1fa5b8fa68a605b41e38f807951fe8620/pygit2-0.24.0.tar.gz"
-    sha256 "ba76d97e90713584c8cb9d33c81cf9156aa69d6914cd3cdbddb740a069298105"
+    url "https://files.pythonhosted.org/packages/29/fb/fd98403ed4ec5554ed4f6de3719d2c672ca2518598061ff7231301ff864b/pygit2-0.24.2.tar.gz"
+    sha256 "2aae85836c3a8da686220db7db05f91f8797e37edf91cc2a1f88b09fb653166a"
   end
 
   resource "six" do
