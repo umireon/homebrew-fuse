@@ -1,8 +1,8 @@
 class RofsFiltered < Formula
   desc "Filtered read-only filesystem for FUSE"
   homepage "https://github.com/gburca/rofs-filtered/"
-  url "https://github.com/gburca/rofs-filtered/archive/rel-1.5.tar.gz"
-  sha256 "4c97a85e7993945e417c45cc80fcb8ad780f310142b8f94e8b3bed005733a698"
+  url "https://github.com/gburca/rofs-filtered/archive/rel-1.6.tar.gz"
+  sha256 "9f46269be24ba6ff23575c0a1a9a6c5923aab749e104984513884c668bf4bf90"
 
   depends_on "pkg-config" => :build
   depends_on "autoconf" => :build
@@ -25,6 +25,6 @@ class RofsFiltered < Formula
   end
 
   test do
-    system "rofs-filtered"
+    system bin/"rofs-filtered"
   end
 end
