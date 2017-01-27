@@ -1,42 +1,26 @@
 class Xmount < Formula
   desc "Convert between multiple input & output disk image types"
-  homepage "https://www.pinguin.lu/index.php"
-  url "http://files.pinguin.lu/xmount-0.5.0.tar.gz"
-  sha256 "ae051d1901a74b34dce737275d0d385b20c21557d1458818dae8d04d5b25a47e"
+  homepage "https://www.pinguin.lu/xmount/"
+  url "https://code.pinguin.lu/diffusion/XMOUNT/xmount.git",
+      :tag => "v0.7.4",
+      :revision => "ca84080b2c857de6951f154886bb7ed5fa100149"
 
+  depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "automake" => :build
-  depends_on "autoconf" => :build
+  depends_on "afflib"
   depends_on "libewf"
   depends_on :osxfuse
 
-  patch :DATA
-
   def install
-    system "aclocal", "-I #{HOMEBREW_PREFIX}/share/aclocal"
-    system "autoconf"
-    system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}"
-    system "make", "install"
+    ENV.prepend "PKG_CONFIG_PATH", Formula["openssl"].opt_lib/"pkgconfig"
+
+    Dir.chdir "trunk" do
+      system "cmake", ".", *std_cmake_args
+      system "make", "install"
+    end
   end
 
   test do
     system bin/"xmount", "--version"
   end
 end
-
-__END__
-diff  a/configure.ac b/configure.ac
---- a/configure.ac
-+++ b/configure.ac
-@@ -2,9 +2,9 @@
-
- AC_PREREQ(2.61)
- AC_INIT([xmount], [0.5.0], [bugs@pinguin.lu])
--AM_INIT_AUTOMAKE(@PACKAGE_NAME@, @PACKAGE_VERSION@)
- AC_CONFIG_SRCDIR([xmount.c])
- AC_CONFIG_HEADER([config.h])
-+AM_INIT_AUTOMAKE
-
- # Checks for programs.
- AC_PROG_CC
